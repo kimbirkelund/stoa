@@ -23,7 +23,7 @@ Global rules that apply across all features:
 
 ## Features
 
-See [features](features/) for the feature catalogue and per-feature
+See [features](features/_index.md) for the feature catalogue and per-feature
 requirements.
 
 ## Conventions

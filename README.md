@@ -16,6 +16,16 @@ rendering arbitrary file types. Core components:
 
 Requirements written in EARS syntax are used to guide which feature to work on and to generate acceptance tests in BDD style for these features. Acceptance tests are turned executable and used as basis for the coding.
 
+## Getting started
+
+```sh
+npm install            # if install scripts are gated, approve electron + esbuild
+npm run build          # electron-vite build → out/
+npm run dev            # run the app in development
+npm run typecheck      # tsc --noEmit
+npm run test:acceptance  # build + Playwright E2E (tests/acceptance/)
+```
+
 ## Documentation
 
 See [`docs/`](docs/_index.md). Every documentation directory has an `_index.md`

@@ -6,7 +6,7 @@ human-readable source of intent; the executable Playwright versions live under
 
 | Scenario file | Validates | Status |
 |---|---|---|
-| [startup.feature](startup.feature) | R-1 — Cross-platform startup | Designed (not yet executable) |
+| [startup.feature](startup.feature) | R-1 — Cross-platform startup | ✅ Executable & passing (`tests/acceptance/shell/startup.spec.ts`) |
 
 ## Definition of "ready state" (R-1)
 

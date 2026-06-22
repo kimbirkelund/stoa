@@ -202,6 +202,10 @@ try
     {
         WriteHeader 'Testing (Playwright acceptance)' -ForegroundColor Cyan;
 
+        # Generate Playwright specs from the .feature files (playwright-bdd)
+        # before running, so the Gherkin is the executable source of truth.
+        RunCommand 'npx' @('bddgen') -QuietOnSuccess:$Quiet;
+
         $a = @('playwright', 'test');
         if ($TestFilter)
         {

@@ -703,3 +703,6 @@ FodyWeavers.xsd
 
 ### Claude Code ###
 .claude/settings.local.json
+
+# playwright-bdd generated tests
+/.features-gen/

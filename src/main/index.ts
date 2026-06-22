@@ -19,13 +19,13 @@ function createWindow(): void {
 
   // electron-vite injects ELECTRON_RENDERER_URL in dev; load the built file otherwise.
   if (process.env['ELECTRON_RENDERER_URL']) {
-    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+    void mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+    void mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
 }
 
-app.whenReady().then(() => {
+void app.whenReady().then(() => {
   createWindow()
 
   app.on('activate', () => {

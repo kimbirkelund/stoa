@@ -28,6 +28,12 @@ jobs:
         shell: pwsh
         run: ./build.ps1 -DoLint -SkipInstall
 
+      # Lint the workflow files themselves.
+      - name: Lint GitHub workflows (actionlint)
+        uses: reviewdog/action-actionlint@v1
+        with:
+          fail_on_error: true
+
   test:
     name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}

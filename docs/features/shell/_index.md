@@ -8,7 +8,8 @@ the top-level navigation model (workspace launching, project tabs).
 - [Requirements](requirements.md) — behavioral requirements (R-1..R-6) and open
   seeds.
 - [Acceptance scenarios](acceptance/_index.md) — BDD scenarios specifying Shell
-  behavior. Executable versions live under `tests/acceptance/shell/`.
+  behavior. The `.feature` files are executed directly via playwright-bdd; step
+  definitions live under `tests/acceptance/steps/`.
 
 Honors the global [constraints](../../constraints.md),
 [cross-cutting requirements](../../cross-cutting.md), and

@@ -1,12 +1,14 @@
 # Shell — Acceptance scenarios
 
-BDD scenarios (Gherkin) that specify the Shell's behavior. These are the
-human-readable source of intent; the executable Playwright versions live under
-`tests/acceptance/shell/`.
+BDD scenarios (Gherkin) that specify the Shell's behavior. These `.feature`
+files **are** the executable acceptance tests: [playwright-bdd](https://github.com/vitalets/playwright-bdd)
+(`bddgen`) generates Playwright specs from them using the step definitions in
+`tests/acceptance/steps/`. The Gherkin is the single source of truth — there is
+no hand-written copy to drift from.
 
 | Scenario file | Validates | Status |
 |---|---|---|
-| [startup.feature](startup.feature) | R-1 — Cross-platform startup | ✅ Executable & passing (`tests/acceptance/shell/startup.spec.ts`) |
+| [startup.feature](startup.feature) | R-1 — Cross-platform startup | ✅ Executable & passing (steps: `tests/acceptance/steps/shell.steps.ts`) |
 
 ## Definition of "ready state" (R-1)
 

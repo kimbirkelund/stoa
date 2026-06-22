@@ -10,7 +10,7 @@
     "build": "electron-vite build",
     "start": "electron-vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test:acceptance": "electron-vite build && playwright test"
+    "test:acceptance": "electron-vite build && bddgen && playwright test"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -24,6 +24,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "electron": "^33.3.0",
     "electron-vite": "^2.3.0",
+    "playwright-bdd": "^9.2.0",
     "typescript": "^5.7.3",
     "vite": "^5.4.11"
   },

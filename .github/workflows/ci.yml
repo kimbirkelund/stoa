@@ -1,0 +1,44 @@
+name: CI
+
+# Runs on the GitHub mirror of the Codeberg repo. Codeberg is the source of
+# truth; this provides the hosted macOS/Windows/Linux matrix that Codeberg's
+# Linux-only CI can't (validates R-1 cross-platform startup).
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      # Electron needs a display; Linux runners are headless, so wrap in xvfb.
+      # build.ps1 -DoTest builds then runs the Playwright acceptance tests.
+      - name: Build and test (Linux)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: xvfb-run -a pwsh ./build.ps1 -DoTest -SkipInstall
+
+      - name: Build and test (Windows / macOS)
+        if: runner.os != 'Linux'
+        shell: pwsh
+        run: ./build.ps1 -DoTest -SkipInstall

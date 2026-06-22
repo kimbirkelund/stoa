@@ -12,6 +12,15 @@ rendering arbitrary file types. Core components:
 - **Markdown & diagrams** — markdown-it + Mermaid (+ KaTeX for math).
 - **UI framework** — React.
 
+## Planned
+
+- **Component showcase** — adopt **Storybook** for designing, documenting, and
+  testing React components. Runs in a **browser** (Chromium engine, to match
+  Electron's renderer), not in Electron. Components must keep the Electron
+  boundary (preload/IPC) injectable so the showcase can mock it. This gives a
+  two-tier test setup: fast headless **component** tests in the browser, and
+  **app/shell** acceptance tests in Electron.
+
 ## Development
 
 Requirements written in EARS syntax are used to guide which feature to work on and to generate acceptance tests in BDD style for these features. Acceptance tests are turned executable and used as basis for the coding.

@@ -6,8 +6,8 @@ files **are** the executable acceptance tests: [playwright-bdd](https://github.c
 `tests/acceptance/steps/`. The Gherkin is the single source of truth — there is
 no hand-written copy to drift from.
 
-| Scenario file | Validates | Status |
-|---|---|---|
+| Scenario file                      | Validates                    | Status                                                                   |
+| ---------------------------------- | ---------------------------- | ------------------------------------------------------------------------ |
 | [startup.feature](startup.feature) | R-1 — Cross-platform startup | ✅ Executable & passing (steps: `tests/acceptance/steps/shell.steps.ts`) |
 
 ## Definition of "ready state" (R-1)

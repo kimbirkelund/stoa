@@ -17,7 +17,7 @@ within the Shell and rely on the behaviors described here.
 - **Project navigation** — presenting the open workspace's active projects as
   browser-like tabs and letting the user move between them (R-6).
 
-## What the Shell is *not* responsible for
+## What the Shell is _not_ responsible for
 
 - The contents and behavior of individual projects (terminal sessions, file
   rendering, agent conversations) — those belong to feature areas hosted inside

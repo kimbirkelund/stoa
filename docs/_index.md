@@ -15,9 +15,9 @@ section, read its `_index.md` first.**
 
 Global rules that apply across all features:
 
-- [Constraints](constraints.md) — non-functional constraints (C-*) that inform
+- [Constraints](constraints.md) — non-functional constraints (C-\*) that inform
   architecture and tech-stack selection.
-- [Cross-cutting requirements](cross-cutting.md) — behavioral requirements (X-*)
+- [Cross-cutting requirements](cross-cutting.md) — behavioral requirements (X-\*)
   that apply to every feature.
 - [Definitions](definitions.md) — shared domain vocabulary (Workspace, Project).
 
@@ -28,6 +28,6 @@ requirements.
 
 ## Conventions
 
-- Each requirement has a stable ID. Behavioral requirements (R-*, X-*) drive
-  acceptance tests; constraints (C-*) have no direct acceptance test.
+- Each requirement has a stable ID. Behavioral requirements (R-\*, X-\*) drive
+  acceptance tests; constraints (C-\*) have no direct acceptance test.
 - Feature-specific behavioral requirements live under `docs/features/<name>/`.

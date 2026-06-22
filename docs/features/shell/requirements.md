@@ -4,8 +4,8 @@ The **Shell** is the application platform that hosts all other features: the
 window, application startup, workspace launching and lifecycle, and project tab
 navigation. Behavior here is independent of any feature built inside it.
 
-See the foundations for [constraints](../../constraints.md) (C-*),
-[cross-cutting requirements](../../cross-cutting.md) (X-*), and
+See the foundations for [constraints](../../constraints.md) (C-\*),
+[cross-cutting requirements](../../cross-cutting.md) (X-\*), and
 [definitions](../../definitions.md) (Workspace, Project).
 
 ## Startup

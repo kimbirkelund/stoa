@@ -9,6 +9,25 @@ on:
   pull_request:
 
 jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # ESLint + Prettier (format check) + tsc.
+      - name: Lint
+        shell: pwsh
+        run: ./build.ps1 -DoLint -SkipInstall
+
   test:
     name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -27,9 +46,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Typecheck
-        run: npm run typecheck
 
       # Electron needs a display; Linux runners are headless, so wrap in xvfb.
       # build.ps1 -DoTest builds then runs the Playwright acceptance tests.

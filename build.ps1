@@ -16,9 +16,18 @@ param(
     [Parameter(ParameterSetName = 'Run', Position = 0)]
     [switch]$DoRun,
 
+    # Lint and format-check (ESLint + Prettier + tsc)
+    [Parameter(ParameterSetName = 'Lint', Position = 0)]
+    [switch]$DoLint,
+
+    # With -DoLint: auto-fix lint and formatting issues instead of just checking
+    [Parameter(ParameterSetName = 'Lint')]
+    [switch]$Fix,
+
     [Parameter(ParameterSetName = 'Build')]
     [Parameter(ParameterSetName = 'Test')]
     [Parameter(ParameterSetName = 'Run')]
+    [Parameter(ParameterSetName = 'Lint')]
     [switch]$SkipInstall,
 
     [Parameter(ParameterSetName = 'Test')]
@@ -229,6 +238,23 @@ try
         RunCommand 'npm' @('run', 'dev');
     }
 
+    function RunLint()
+    {
+        if ($Fix)
+        {
+            WriteHeader 'Linting (ESLint + Prettier, auto-fix)' -ForegroundColor Cyan;
+            RunCommand 'npm' @('run', 'lint:fix') -QuietOnSuccess:$Quiet;
+            RunCommand 'npm' @('run', 'format') -QuietOnSuccess:$Quiet;
+        }
+        else
+        {
+            WriteHeader 'Linting (ESLint + Prettier + tsc)' -ForegroundColor Cyan;
+            RunCommand 'npm' @('run', 'lint') -QuietOnSuccess:$Quiet;
+            RunCommand 'npm' @('run', 'format:check') -QuietOnSuccess:$Quiet;
+            RunCommand 'npm' @('run', 'typecheck') -QuietOnSuccess:$Quiet;
+        }
+    }
+
     Write-Verbose "Parameter set name: $($PSCmdlet.ParameterSetName)";
     switch ($PSCmdlet.ParameterSetName)
     {
@@ -254,6 +280,12 @@ try
         {
             RunInstall -OnlyIfNotAlreadyInstalled
             RunDev
+        }
+
+        'Lint'
+        {
+            RunInstall -OnlyIfNotAlreadyInstalled
+            RunLint
         }
 
         default { throw "Unknown parameter set: $($PSCmdlet.ParameterSetName)" }

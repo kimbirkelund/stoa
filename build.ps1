@@ -24,10 +24,20 @@ param(
     [Parameter(ParameterSetName = 'Lint')]
     [switch]$Fix,
 
+    # Launch the Storybook component showcase locally in the browser
+    [Parameter(ParameterSetName = 'Storybook', Position = 0)]
+    [switch]$DoStorybook,
+
+    # With -DoStorybook: build the static showcase site (storybook-static/)
+    # instead of serving it — used by the GitHub Pages workflow
+    [Parameter(ParameterSetName = 'Storybook')]
+    [switch]$Static,
+
     [Parameter(ParameterSetName = 'Build')]
     [Parameter(ParameterSetName = 'Test')]
     [Parameter(ParameterSetName = 'Run')]
     [Parameter(ParameterSetName = 'Lint')]
+    [Parameter(ParameterSetName = 'Storybook')]
     [switch]$SkipInstall,
 
     [Parameter(ParameterSetName = 'Test')]
@@ -266,6 +276,20 @@ try
         RunCommand 'npm' @('run', 'dev');
     }
 
+    function RunStorybook()
+    {
+        if ($Static)
+        {
+            WriteHeader 'Building Storybook (static showcase)' -ForegroundColor Cyan;
+            RunCommand 'npm' @('run', 'build-storybook') -QuietOnSuccess:$Quiet;
+            return;
+        }
+
+        WriteHeader 'Running Storybook (component showcase)' -ForegroundColor Cyan;
+        # storybook dev opens the browser at http://localhost:6006 by default.
+        RunCommand 'npm' @('run', 'storybook');
+    }
+
     function RunLint()
     {
         if ($Fix)
@@ -314,6 +338,12 @@ try
         {
             RunInstall -OnlyIfNotAlreadyInstalled
             RunLint
+        }
+
+        'Storybook'
+        {
+            RunInstall -OnlyIfNotAlreadyInstalled
+            RunStorybook
         }
 
         default { throw "Unknown parameter set: $($PSCmdlet.ParameterSetName)" }

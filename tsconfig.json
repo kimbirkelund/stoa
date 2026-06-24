@@ -12,5 +12,12 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["src", "tests", "electron.vite.config.ts", "playwright.config.ts"]
+  "include": [
+    "src",
+    "tests",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx",
+    "electron.vite.config.ts",
+    "playwright.config.ts"
+  ]
 }

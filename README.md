@@ -12,14 +12,23 @@ rendering arbitrary file types. Core components:
 - **Markdown & diagrams** — markdown-it + Mermaid (+ KaTeX for math).
 - **UI framework** — React.
 
-## Planned
+## Component showcase
 
-- **Component showcase** — adopt **Storybook** for designing, documenting, and
-  testing React components. Runs in a **browser** (Chromium engine, to match
-  Electron's renderer), not in Electron. Components must keep the Electron
-  boundary (preload/IPC) injectable so the showcase can mock it. This gives a
-  two-tier test setup: fast headless **component** tests in the browser, and
-  **app/shell** acceptance tests in Electron.
+**Storybook** is used for designing, documenting, and reviewing React components
+in isolation. It runs in a **browser** (Chromium engine, to match Electron's
+renderer), not in Electron — so components must keep the Electron boundary
+(preload/IPC) injectable (props/callbacks) and be free of direct IPC access, so
+the showcase can render and mock them. Stories live next to their components
+(`src/renderer/src/**/*.stories.tsx`). A theme toolbar (light/dark) exercises the
+shared theme tokens (`src/renderer/src/theme.css`).
+
+- `./build.ps1 -DoStorybook` — serve the showcase locally (browser, port 6006).
+- `./build.ps1 -DoStorybook -Static` — build the static site to `storybook-static/`.
+- On push to `main`, the [Storybook workflow](.github/workflows/storybook.yml)
+  publishes the static showcase to **GitHub Pages**.
+
+This gives a two-tier setup: component review/design in the browser via
+Storybook, and **app/shell** acceptance tests in Electron (below).
 
 ## Development
 
@@ -39,6 +48,8 @@ gated.
 ./build.ps1 -DoTest -SkipBuild      # run tests against the existing build
 ./build.ps1 -DoTest -TestFilter ... # only tests matching a regex
 ./build.ps1 -DoTest -ListTests      # list matching tests without running
+./build.ps1 -DoStorybook            # serve the component showcase (browser)
+./build.ps1 -DoStorybook -Static    # build the static showcase site
 ```
 
 Add `-Quiet` to suppress output on success, `-Verbose` for diagnostics.

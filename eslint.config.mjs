@@ -7,7 +7,7 @@ import prettier from 'eslint-config-prettier'
 import globals from 'globals'
 
 export default tseslint.config(
-  { ignores: ['out/', 'dist/', '.features-gen/', 'node_modules/'] },
+  { ignores: ['out/', 'dist/', '.features-gen/', 'node_modules/', 'storybook-static/'] },
 
   // Plain JS recommended for any .js (e.g. this config file).
   js.configs.recommended,

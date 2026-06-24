@@ -706,3 +706,6 @@ FodyWeavers.xsd
 
 # playwright-bdd generated tests
 /.features-gen/
+
+*storybook.log
+storybook-static

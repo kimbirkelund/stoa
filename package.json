@@ -4,7 +4,7 @@
   "description": "Stoa — Agentic Development Environment",
   "main": "./out/main/index.js",
   "author": "Kim Birkelund <stoa@birkelund.me>",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "dev": "electron-vite dev",
     "build": "electron-vite build",

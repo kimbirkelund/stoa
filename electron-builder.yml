@@ -1,0 +1,34 @@
+appId: me.birkelund.stoa
+productName: Stoa
+
+directories:
+  output: dist
+  buildResources: build-resources
+
+# electron-vite emits the app into out/. node_modules production deps and
+# package.json are bundled automatically by electron-builder.
+files:
+  - out/**/*
+  - '!**/*.map'
+
+mac:
+  category: public.app-category.developer-tools
+  target:
+    - dmg
+    - zip # zip is required for electron-updater on macOS
+
+win:
+  target:
+    - nsis
+
+linux:
+  category: Development
+  target:
+    - AppImage
+    - deb
+
+# Publish to GitHub Releases (the tag drives the release).
+publish:
+  provider: github
+  owner: kimbirkelund
+  repo: stoa

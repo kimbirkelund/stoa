@@ -1,0 +1,61 @@
+name: Release
+
+# Build installers for all three platforms and publish them to a GitHub
+# Release. Triggered by pushing a release tag (e.g. releases/v1.0.0), which
+# matches the publicReleaseRefs in version.json so nbgv produces a clean version.
+on:
+  push:
+    tags:
+      - 'releases/v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      # fetch-depth 0 so Nerdbank.GitVersioning can see full history.
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Restore .NET tools (nbgv)
+        run: dotnet tool restore
+
+      - name: Compute version (Nerdbank.GitVersioning)
+        id: version
+        shell: bash
+        run: echo "version=$(dotnet nbgv get-version -v NpmPackageVersion)" >> "$GITHUB_OUTPUT"
+
+      - name: Build renderer/main/preload
+        run: npm run build
+
+      # Build the installers and publish them to the GitHub Release for this tag.
+      # The version comes from nbgv and is injected via extraMetadata, so
+      # package.json is not mutated. Builds are unsigned for now (no certificates
+      # configured), so disable macOS signing auto-discovery.
+      - name: Package and publish
+        shell: bash
+        run: npx electron-builder --publish always -c.extraMetadata.version="${{ steps.version.outputs.version }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CSC_IDENTITY_AUTO_DISCOVERY: false

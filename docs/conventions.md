@@ -38,9 +38,12 @@ Each feature has a **2-character uppercase code**, unique across all features.
 - Declared in the feature's own `_index.md`.
 - Used to form that feature's requirement IDs (`RF-N`).
 
-| Feature | Code |
-| ------- | ---- |
-| Shell   | `SH` |
+| Feature            | Code |
+| ------------------ | ---- |
+| Shell              | `SH` |
+| Workspaces         | `WS` |
+| Workspace launcher | `WL` |
+| Projects           | `PJ` |
 
 (The registry in `features/_index.md` is the source of truth; this table is
 illustrative.)

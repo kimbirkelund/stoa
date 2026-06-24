@@ -8,7 +8,10 @@ Each feature has a unique **2-character code** used to form its requirement IDs
 
 | Feature                  | Code | Status      | Description                                                                                     |
 | ------------------------ | ---- | ----------- | ----------------------------------------------------------------------------------------------- |
-| [Shell](shell/_index.md) | `SH` | In progress | The application platform that hosts all features: startup, workspace launching, tab navigation. |
+| [Shell](shell/_index.md) | `SH` | In progress | The application platform that hosts all features: window and lifecycle, reaching a ready state. |
+| [Workspaces](workspaces/_index.md) | `WS` | In progress | Application-level workspace lifecycle: startup resolution (command line / launcher), history, unopenable handling. |
+| [Workspace launcher](workspace-launcher/_index.md) | `WL` | In progress | Selecting a recent workspace, opening one from a file, or creating a new one — the launcher RWS-2 presents. |
+| [Projects](projects/_index.md) | `PJ` | In progress | Presenting the open workspace's active projects as navigable tabs. |
 
 See the [foundations](../_index.md#foundations) for global constraints,
 cross-cutting requirements, and definitions that all features must honor.

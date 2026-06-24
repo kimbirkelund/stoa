@@ -1,8 +1,9 @@
 # Shell — Requirements
 
 The **Shell** is the application platform that hosts all other features: the
-window, application startup, workspace launching and lifecycle, and project tab
-navigation. Behavior here is independent of any feature built inside it.
+window and application lifecycle. Workspace lifecycle and project navigation are
+their own features (see below); the Shell only brings the application to a ready
+state in which they run.
 
 See the foundations for [constraints](../../constraints.md) (C-\*),
 [cross-cutting requirements](../../cross-cutting.md) (X-\*), and
@@ -13,37 +14,19 @@ See the foundations for [constraints](../../constraints.md) (C-\*),
 - **RSH-1 — Cross-platform startup.** When started on a supported platform (macOS,
   Windows, or Linux), the system shall reach a ready state. _Depends on: C-1._
 
-## Workspaces
+## Hosted features
 
-- **RSH-2 (event) — Open workspace from command line.** When the system is started
-  with a workspace specified as a command-line argument, the system shall open
-  that workspace.
-- **RSH-3 (event) — Workspace launcher.** When the system is started without a
-  workspace specified, the system shall present a workspace launcher offering
-  (a) recent workspaces, if any, (b) opening a workspace from a file, and
-  (c) creating a new workspace.
-- **RSH-4 (ubiquitous) — Track opened workspaces.** The system shall track,
-  persistently, the workspaces that have been opened. (This persists references
-  to opened workspaces, independent of how each workspace itself is stored per
-  C-3.)
-- **RSH-5 (unwanted) — Unopenable workspace.** If a specified workspace cannot be
-  opened (missing, corrupt, or invalid — whether from a command-line argument or
-  from opening a file), then the system shall inform the user and continue as if
-  no workspace had been specified.
+Behavior formerly listed here has moved to dedicated features:
 
-## Projects
-
-- **RSH-6 (ubiquitous) — Active projects as tabs.** The system shall present the
-  active projects of the open workspace as navigable tabs (analogous to browser
-  tabs). A project is active exactly when its tab is open.
+- **[Workspaces](../workspaces/_index.md)** (`RWS-*`) — startup resolution
+  (command line / launcher), history, and unopenable-workspace handling.
+- **[Workspace launcher](../workspace-launcher/_index.md)** (`RWL-*`) — the
+  launcher's select / open / create branches.
+- **[Projects](../projects/_index.md)** (`RPJ-*`) — active projects as tabs.
 
 ## Open seeds (not yet specified)
 
 To be elaborated as feature work proceeds:
 
-- **Workspace composition** — creating a workspace, adding/removing projects,
-  activating/deactivating projects (RSH-3c introduces creation).
 - **Keyboard model** — focus order, shortcut scheme, command palette (drives X-1).
 - **Shortcut discoverability** — making keyboard operations discoverable.
-- **In-workspace vs. side-stored data** — what is committed (C-3) vs. stored
-  locally (e.g. agent conversations).

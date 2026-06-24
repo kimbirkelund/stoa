@@ -11,7 +11,8 @@ app stores by name in its configuration directory
 
 - [Description](description.md) — how the launcher works (prose, mental model).
 - [Requirements](requirements.md) — behavioral requirements (`RWL-*`) and open seeds.
-- Acceptance scenarios — _TBD once requirements settle._
+- [Acceptance scenarios](acceptance/_index.md) — BDD scenarios. The walking-skeleton
+  placeholder scenario is executable; RWL-1..4 are `@wip` until the launcher UI exists.
 
 Honors the global [constraints](../../constraints.md) (notably C-3 text storage),
 [cross-cutting requirements](../../cross-cutting.md) (X-1 keyboard), and

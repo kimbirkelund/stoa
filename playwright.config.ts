@@ -5,7 +5,10 @@ import { defineBddConfig } from 'playwright-bdd'
 // generates Playwright specs from them using the step definitions below.
 const testDir = defineBddConfig({
   features: 'docs/features/**/acceptance/*.feature',
-  steps: 'tests/acceptance/**/*.ts'
+  steps: 'tests/acceptance/**/*.ts',
+  // @wip scenarios specify not-yet-built behavior; exclude them from generation
+  // so their undefined steps do not fail the suite.
+  tags: 'not @wip'
 })
 
 export default defineConfig({

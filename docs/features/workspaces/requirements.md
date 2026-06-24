@@ -21,7 +21,8 @@ feature (`RWL-*`).
 
 - **RWS-3 (ubiquitous) — Persist workspaces by name.** The system shall store
   workspaces persistently in its application-managed configuration directory (C-3),
-  each identified by a unique name, such that they remain available across
+  each identified by a unique name (compared case-insensitively; see
+  [definitions](../../definitions.md)), such that they remain available across
   restarts.
 
 ## Failure handling

@@ -3,7 +3,7 @@ Feature: Shell startup
   I want the application to start and become ready
   So that I can begin working
 
-  # Validates R-1 — Cross-platform startup.
+  # Validates RSH-1 — Cross-platform startup.
   Scenario: Application reaches ready state on launch
     Given the Stoa application is launched
     When the main window opens

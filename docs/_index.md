@@ -15,6 +15,8 @@ section, read its `_index.md` first.**
 
 Global rules that apply across all features:
 
+- [Conventions](conventions.md) — requirement ID scheme (`C-*`, `X-*`, `R-*`,
+  `RF-*`) and feature codes. **Read before adding requirements.**
 - [Constraints](constraints.md) — non-functional constraints (C-\*) that inform
   architecture and tech-stack selection.
 - [Cross-cutting requirements](cross-cutting.md) — behavioral requirements (X-\*)
@@ -28,6 +30,7 @@ requirements.
 
 ## Conventions
 
-- Each requirement has a stable ID. Behavioral requirements (R-\*, X-\*) drive
-  acceptance tests; constraints (C-\*) have no direct acceptance test.
-- Feature-specific behavioral requirements live under `docs/features/<name>/`.
+See [conventions](conventions.md) for the full requirement ID scheme and feature
+codes. In brief: every requirement has a stable ID; behavioral requirements
+(`R-*`, `X-*`, `RF-*`) drive acceptance tests, constraints (`C-*`) have no direct
+acceptance test; feature-specific requirements live under `docs/features/<name>/`.

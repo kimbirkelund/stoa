@@ -8,9 +8,9 @@ no hand-written copy to drift from.
 
 | Scenario file                      | Validates                    | Status                                                                   |
 | ---------------------------------- | ---------------------------- | ------------------------------------------------------------------------ |
-| [startup.feature](startup.feature) | R-1 — Cross-platform startup | ✅ Executable & passing (steps: `tests/acceptance/steps/shell.steps.ts`) |
+| [startup.feature](startup.feature) | RSH-1 — Cross-platform startup | ✅ Executable & passing (steps: `tests/acceptance/steps/shell.steps.ts`) |
 
-## Definition of "ready state" (R-1)
+## Definition of "ready state" (RSH-1)
 
 The shell has reached a ready state when:
 

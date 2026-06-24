@@ -8,14 +8,14 @@ within the Shell and rely on the behaviors described here.
 ## What the Shell is responsible for
 
 - **Application lifecycle** — launching the app and bringing it to a ready state
-  on macOS, Windows, and Linux (R-1).
+  on macOS, Windows, and Linux (RSH-1).
 - **Workspace launching** — deciding, at startup, whether to open a workspace
-  directly (command-line argument, R-2) or present the workspace launcher
-  (R-3), and degrading gracefully when a workspace cannot be opened (R-5).
+  directly (command-line argument, RSH-2) or present the workspace launcher
+  (RSH-3), and degrading gracefully when a workspace cannot be opened (RSH-5).
 - **Workspace history** — persistently tracking previously opened workspaces so
-  the launcher can offer recent ones (R-4).
+  the launcher can offer recent ones (RSH-4).
 - **Project navigation** — presenting the open workspace's active projects as
-  browser-like tabs and letting the user move between them (R-6).
+  browser-like tabs and letting the user move between them (RSH-6).
 
 ## What the Shell is _not_ responsible for
 

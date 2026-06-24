@@ -12,7 +12,9 @@ height and the `releases/v{version}` format that the Release workflow and
 
 When asked to tag:
 
-1. Ensure the commit to tag is the current `HEAD` and is already pushed.
+1. Ensure the commit to tag is the current `HEAD` and is already pushed. nbgv
+   reads the **committed** `version.json`, not your working tree — commit any
+   `version.json` change before tagging, or the old config/version is used.
 2. Create the tag with nbgv:
    ```sh
    dotnet nbgv tag

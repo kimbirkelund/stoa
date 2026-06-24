@@ -100,9 +100,24 @@ try
         }
     }
 
-    # Electron's postinstall can be gated/broken in some environments, leaving a
-    # stub binary that fails to launch. Detect that and re-extract the full
-    # archive from the Electron download cache.
+    # Returns $true when node_modules/electron has a fully extracted binary.
+    # A gated/partial postinstall leaves the dir missing or a tiny stub.
+    function Test-ElectronHealthy([string]$DistDir)
+    {
+        if (!(Test-Path $DistDir))
+        {
+            return $false;
+        }
+        $sizeBytes = (Get-ChildItem $DistDir -Recurse -File -ErrorAction SilentlyContinue |
+            Measure-Object -Property Length -Sum).Sum;
+        return $sizeBytes -gt 100MB;
+    }
+
+    # Electron's postinstall can be gated or only partially run in some
+    # environments, leaving the binary missing or a stub that fails to launch.
+    # Repair it: first by running Electron's own installer (which downloads the
+    # archive to the cache and extracts it), then — if that still leaves a stub —
+    # by extracting the full archive from the Electron download cache manually.
     function EnsureElectron()
     {
         $electronDir = Join-Path 'node_modules' 'electron';
@@ -113,19 +128,27 @@ try
         }
 
         $distDir = Join-Path $electronDir 'dist';
-        if (Test-Path $distDir)
+        if (Test-ElectronHealthy $distDir)
         {
-            $sizeBytes = (Get-ChildItem $distDir -Recurse -File -ErrorAction SilentlyContinue |
-                Measure-Object -Property Length -Sum).Sum;
-            if ($sizeBytes -gt 100MB)
-            {
-                Write-Verbose 'Electron binary looks healthy.';
-                return;
-            }
+            Write-Verbose 'Electron binary looks healthy.';
+            return;
         }
 
         WriteHeader 'Repairing Electron binary' -ForegroundColor Yellow;
 
+        # First attempt: run Electron's own install script. This downloads the
+        # archive (if not already cached) and extracts it. Handles the common
+        # case where the postinstall never ran at all.
+        Write-Verbose 'Running electron/install.js to download/extract the binary.';
+        RunCommand 'node' @((Join-Path $electronDir 'install.js')) -QuietOnSuccess:$Quiet;
+        if (Test-ElectronHealthy $distDir)
+        {
+            Write-Verbose 'Electron binary repaired via install.js.';
+            return;
+        }
+
+        # Fallback: install.js left a stub (seen with some gated postinstalls).
+        # Extract the full archive from the Electron download cache manually.
         $version = (Get-Content (Join-Path $electronDir 'package.json') -Raw | ConvertFrom-Json).version;
 
         if ($IsWindows)
@@ -172,7 +195,12 @@ try
 
         Set-Content -Path (Join-Path $electronDir 'path.txt') -Value $exeRelative -NoNewline;
 
-        Write-Verbose 'Electron binary repaired.';
+        if (!(Test-ElectronHealthy $distDir))
+        {
+            throw "Electron binary repair failed; dist is still incomplete after extracting $zipName.";
+        }
+
+        Write-Verbose 'Electron binary repaired from cache.';
     }
 
     function RunInstall([switch]$OnlyIfNotAlreadyInstalled)

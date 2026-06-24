@@ -28,7 +28,11 @@ linux:
     - deb
 
 # Publish to GitHub Releases (the tag drives the release).
+# releaseType: prerelease publishes immediately (not a draft) and flags the
+# release as a pre-release — appropriate while versions carry an -alpha tag.
+# Switch to "release" once shipping stable versions.
 publish:
   provider: github
   owner: kimbirkelund
   repo: stoa
+  releaseType: prerelease

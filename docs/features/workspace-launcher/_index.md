@@ -4,10 +4,10 @@ Feature code: **`WL`** (requirement IDs `RWL-*`; see [conventions](../../convent
 
 The **Workspace launcher** is the entry surface presented at startup when no
 workspace is specified ([RWS-2](../workspaces/requirements.md)). It elaborates the
-three branches RWS-2 names into testable behavior: **select** a recent workspace,
-**open** one from a file, or **create** a new one. Opening by any branch records
-the workspace in history ([RWS-3](../workspaces/requirements.md)) so it can later
-appear under recents.
+two branches RWS-2 names into testable behavior: **select** an existing workspace
+by name, or **create** a new one. Both branches operate over the workspaces the
+app stores by name in its configuration directory
+([RWS-3](../workspaces/requirements.md)).
 
 - [Description](description.md) — how the launcher works (prose, mental model).
 - [Requirements](requirements.md) — behavioral requirements (`RWL-*`) and open seeds.

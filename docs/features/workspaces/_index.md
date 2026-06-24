@@ -4,8 +4,9 @@ Feature code: **`WS`** (requirement IDs `RWS-*`; see [conventions](../../convent
 
 The **Workspaces** feature owns the application-level lifecycle of a
 [workspace](../../definitions.md): resolving which workspace to open at startup
-(command-line argument or the launcher), tracking the workspaces that have been
-opened, and degrading gracefully when a requested workspace cannot be opened.
+(command-line name or the launcher), persisting workspaces by name in the
+app-managed configuration directory, and degrading gracefully when a requested
+workspace cannot be opened.
 
 - [Description](description.md) — how workspace lifecycle works (prose, mental model).
 - [Requirements](requirements.md) — behavioral requirements (`RWS-*`) and open seeds.

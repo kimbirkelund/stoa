@@ -9,5 +9,8 @@ Constraints have no direct acceptance test.
 - **C-2 — Graphical user interface.** The system shall provide a graphical user
   interface (GUI) as its sole user interface, rather than a terminal/text-based
   interface.
-- **C-3 — Version-control-friendly workspace storage.** The system shall store
-  workspaces in a text-based file format suitable for version control.
+- **C-3 — Human-readable, version-control-friendly workspace storage.** The system
+  shall store each workspace as a human-readable, text-based file in its
+  application-managed configuration directory (e.g. `~/.config/stoa`), in a format
+  suitable for version control — so the configuration directory can be inspected,
+  hand-edited, and committed.

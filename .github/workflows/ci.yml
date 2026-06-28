@@ -87,7 +87,3 @@ jobs:
         if: runner.os != 'Linux'
         shell: pwsh
         run: ./build.ps1 -DoTest -SkipInstall
-        env:
-          # TEMP: log the Electron process stdout/stderr so a "Process failed to
-          # launch!" on the Windows runner shows its real exit reason.
-          DEBUG: pw:browser*

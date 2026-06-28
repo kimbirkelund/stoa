@@ -16,5 +16,13 @@ export default defineConfig({
   timeout: 30_000,
   expect: { timeout: 10_000 },
   reporter: 'list',
-  fullyParallel: false
+  // Run one worker: every scenario execs the SAME node_modules electron binary,
+  // and Windows refuses to load that executable image concurrently while it is
+  // still being written/virus-scanned after extraction ("The process cannot
+  // access the file because it is being used by another process"). Playwright's
+  // worker parallelism targets cheap isolated browser contexts, not N processes
+  // sharing one native binary, so real-Electron e2e must launch serially.
+  // (fullyParallel:false alone only serializes within a file, not across files.)
+  fullyParallel: false,
+  workers: 1
 })

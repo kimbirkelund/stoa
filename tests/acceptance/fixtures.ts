@@ -35,7 +35,10 @@ export async function launchApp(
       })
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error)
-      const transient = message.includes('ETXTBSY') || message.includes('Process failed to launch')
+      const transient =
+        message.includes('ETXTBSY') ||
+        message.includes('Process failed to launch') ||
+        message.includes('being used by another process')
       if (!transient || attempt === maxAttempts) {
         throw error
       }

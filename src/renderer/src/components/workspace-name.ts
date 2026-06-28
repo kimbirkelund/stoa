@@ -8,8 +8,7 @@ export function isValidWorkspaceName(name: string): boolean {
 }
 
 export type CreateValidation =
-  | { ok: true; name: string }
-  | { ok: false; reason: 'invalid' | 'duplicate' }
+  { ok: true; name: string } | { ok: false; reason: 'invalid' | 'duplicate' }
 
 // Validate a proposed new workspace name against the existing set. Names are
 // trimmed; the pattern is checked first (RWL-4), then case-insensitive

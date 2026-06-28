@@ -1,4 +1,4 @@
-[CmdletBinding(DefaultParameterSetName = 'Build')]
+﻿[CmdletBinding(DefaultParameterSetName = 'Build')]
 param(
     # Install dependencies (npm install + ensure Electron binary)
     [Parameter(ParameterSetName = 'Install', Position = 0)]
@@ -327,7 +327,7 @@ try
             RunCommand 'npm' @('run', 'lint:fix') -QuietOnSuccess:$Quiet;
             RunCommand 'npm' @('run', 'format') -QuietOnSuccess:$Quiet;
             $psFiles = Get-ChildItem -Path . -Filter '*.ps1' -Recurse |
-                Where-Object FullName -notlike '*/node_modules/*';
+                Where-Object FullName -NotLike '*/node_modules/*';
             if ($psFiles)
             {
                 Invoke-ScriptAnalyzer -Path $psFiles.FullName -Settings ./PSScriptAnalyzerSettings.psd1 -Fix | Out-Null
@@ -340,7 +340,7 @@ try
             RunCommand 'npm' @('run', 'format:check') -QuietOnSuccess:$Quiet;
             RunCommand 'npm' @('run', 'typecheck') -QuietOnSuccess:$Quiet;
             $psFiles = Get-ChildItem -Path . -Filter '*.ps1' -Recurse |
-                Where-Object FullName -notlike '*/node_modules/*';
+                Where-Object FullName -NotLike '*/node_modules/*';
             $psaResults = if ($psFiles)
             {
                 Invoke-ScriptAnalyzer -Path $psFiles.FullName -Settings ./PSScriptAnalyzerSettings.psd1 -Severity Error, Warning

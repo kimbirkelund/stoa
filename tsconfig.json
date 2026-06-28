@@ -18,6 +18,8 @@
     ".storybook/**/*.ts",
     ".storybook/**/*.tsx",
     "electron.vite.config.ts",
-    "playwright.config.ts"
+    "playwright.config.ts",
+    "vitest.config.ts",
+    "vitest.shims.d.ts"
   ]
 }

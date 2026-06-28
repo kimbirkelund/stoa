@@ -17,6 +17,8 @@ Global rules that apply across all features:
 
 - [Conventions](conventions.md) — requirement ID scheme (`C-*`, `X-*`, `R-*`,
   `RF-*`) and feature codes. **Read before adding requirements.**
+- [Testing strategy](testing.md) — the three test tiers (unit / component /
+  system), what each owns, and how to run them.
 - [Constraints](constraints.md) — non-functional constraints (C-\*) that inform
   architecture and tech-stack selection.
 - [Cross-cutting requirements](cross-cutting.md) — behavioral requirements (X-\*)

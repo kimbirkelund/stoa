@@ -43,7 +43,12 @@ param(
     [Parameter(ParameterSetName = 'Test')]
     [switch]$SkipBuild,
 
-    # Only run tests whose title matches this regex (Playwright -g)
+    # Which test tiers to run (see docs/testing.md). Defaults to all three.
+    [Parameter(ParameterSetName = 'Test')]
+    [ValidateSet('All', 'Unit', 'Component', 'System')]
+    [string[]]$Kinds = @('All'),
+
+    # Only run tests whose title matches this regex (Playwright -g, System tier)
     [Parameter(ParameterSetName = 'Test')]
     [string]$TestFilter,
 
@@ -245,29 +250,53 @@ try
         RunCommand 'npm' @('run', 'build') -QuietOnSuccess:$Quiet;
     }
 
+    function ShouldRunKind([string]$Kind)
+    {
+        return ($Kinds -contains 'All') -or ($Kinds -contains $Kind);
+    }
+
     function RunTest()
     {
-        WriteHeader 'Testing (Playwright acceptance)' -ForegroundColor Cyan;
-
-        # Generate Playwright specs from the .feature files (playwright-bdd)
-        # before running, so the Gherkin is the executable source of truth.
-        RunCommand 'npx' @('bddgen') -QuietOnSuccess:$Quiet;
-
-        $a = @('playwright', 'test');
-        if ($TestFilter)
+        # Unit tier: pure logic in node (vitest).
+        if (ShouldRunKind 'Unit')
         {
-            $a += @('-g', $TestFilter);
-        }
-        if ($Headed)
-        {
-            $a += '--headed';
-        }
-        if ($ListTests)
-        {
-            $a += '--list';
+            WriteHeader 'Testing — Unit (vitest)' -ForegroundColor Cyan;
+            RunCommand 'npm' @('run', 'test:unit') -QuietOnSuccess:$Quiet;
         }
 
-        RunCommand 'npx' $a;
+        # Component tier: Storybook stories run as tests in a headless Chromium.
+        if (ShouldRunKind 'Component')
+        {
+            WriteHeader 'Testing — Component (Storybook stories)' -ForegroundColor Cyan;
+            RunCommand 'npx' @('playwright', 'install', 'chromium') -QuietOnSuccess:$Quiet;
+            RunCommand 'npm' @('run', 'test:component') -QuietOnSuccess:$Quiet;
+        }
+
+        # System tier: Playwright-bdd acceptance against the real Electron app.
+        if (ShouldRunKind 'System')
+        {
+            WriteHeader 'Testing — System (Playwright acceptance)' -ForegroundColor Cyan;
+
+            # Generate Playwright specs from the .feature files (playwright-bdd)
+            # before running, so the Gherkin is the executable source of truth.
+            RunCommand 'npx' @('bddgen') -QuietOnSuccess:$Quiet;
+
+            $a = @('playwright', 'test');
+            if ($TestFilter)
+            {
+                $a += @('-g', $TestFilter);
+            }
+            if ($Headed)
+            {
+                $a += '--headed';
+            }
+            if ($ListTests)
+            {
+                $a += '--list';
+            }
+
+            RunCommand 'npx' $a;
+        }
     }
 
     function RunDev()
@@ -324,7 +353,11 @@ try
         'Test'
         {
             RunInstall -OnlyIfNotAlreadyInstalled
-            RunBuild
+            # Only the System tier needs the built Electron app.
+            if (ShouldRunKind 'System')
+            {
+                RunBuild
+            }
             RunTest
         }
 

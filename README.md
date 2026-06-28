@@ -27,8 +27,19 @@ shared theme tokens (`src/renderer/src/theme.css`).
 - On push to `main`, the [Storybook workflow](.github/workflows/storybook.yml)
   publishes the static showcase to **GitHub Pages**.
 
-This gives a two-tier setup: component review/design in the browser via
-Storybook, and **app/shell** acceptance tests in Electron (below).
+## Testing
+
+Three tiers (full strategy: [`docs/testing.md`](docs/testing.md)):
+
+- **Unit** — vitest, pure logic, node, fast (`*.test.ts` beside the module). Built
+  test-first (TDD) when practical.
+- **Component** — Storybook + `@storybook/addon-vitest`: stories run as tests in a
+  headless browser (`*.stories.tsx` beside the component).
+- **System** — playwright-bdd: real Electron, end-to-end (the `.feature` files
+  under `docs/features/**/acceptance/`).
+
+`./build.ps1 -DoTest` runs all three; `-Kinds Unit|Component|System|All` selects a
+subset.
 
 ## Development
 

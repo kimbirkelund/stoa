@@ -7,6 +7,15 @@ Read README.md
 Requirements live in `docs/` in EARS syntax. Every directory has an `_index.md`
 — read it first. Feature requirements live under `docs/features/<name>/`.
 
+## Testing
+
+Three tiers (see [`docs/testing.md`](docs/testing.md)): **unit** (vitest, pure
+logic), **component** (Storybook + addon-vitest, stories-as-tests in a browser),
+**system** (playwright-bdd, real Electron). Test at the lowest tier that can prove
+the behavior; a rule lives in one pure module, unit-tested. Develop unit-tier
+logic **test-first (TDD)** whenever practical. Run with `./build.ps1 -DoTest`
+(`-Kinds Unit|Component|System|All`).
+
 ## Committing & Pushing
 
 - Only commit if explicitly allowed by the human.

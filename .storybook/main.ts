@@ -4,8 +4,8 @@ import type { StorybookConfig } from '@storybook/react-vite'
 // a browser (Chromium, matching Electron's renderer) — components must stay free
 // of direct Electron/IPC access so the showcase can render them in isolation.
 const config: StorybookConfig = {
-  stories: ['../src/renderer/src/**/*.mdx', '../src/renderer/src/**/*.stories.@(ts|tsx)'],
-  addons: ['@storybook/addon-a11y', '@storybook/addon-docs'],
+  stories: ['../src/renderer/src/**/*.stories.@(ts|tsx)'],
+  addons: ['@storybook/addon-a11y', '@storybook/addon-docs', '@storybook/addon-vitest'],
   framework: '@storybook/react-vite'
 }
 export default config

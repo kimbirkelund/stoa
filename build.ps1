@@ -124,7 +124,7 @@ try
             return $false;
         }
         $sizeBytes = (Get-ChildItem $DistDir -Recurse -File -ErrorAction SilentlyContinue |
-            Measure-Object -Property Length -Sum).Sum;
+                Measure-Object -Property Length -Sum).Sum;
         return $sizeBytes -gt 100MB;
     }
 
@@ -323,16 +323,34 @@ try
     {
         if ($Fix)
         {
-            WriteHeader 'Linting (ESLint + Prettier, auto-fix)' -ForegroundColor Cyan;
+            WriteHeader 'Linting (ESLint + Prettier + PSScriptAnalyzer, auto-fix)' -ForegroundColor Cyan;
             RunCommand 'npm' @('run', 'lint:fix') -QuietOnSuccess:$Quiet;
             RunCommand 'npm' @('run', 'format') -QuietOnSuccess:$Quiet;
+            $psFiles = Get-ChildItem -Path . -Filter '*.ps1' -Recurse |
+                Where-Object FullName -notlike '*/node_modules/*';
+            if ($psFiles)
+            {
+                Invoke-ScriptAnalyzer -Path $psFiles.FullName -Settings ./PSScriptAnalyzerSettings.psd1 -Fix | Out-Null
+            }
         }
         else
         {
-            WriteHeader 'Linting (ESLint + Prettier + tsc)' -ForegroundColor Cyan;
+            WriteHeader 'Linting (ESLint + Prettier + tsc + PSScriptAnalyzer)' -ForegroundColor Cyan;
             RunCommand 'npm' @('run', 'lint') -QuietOnSuccess:$Quiet;
             RunCommand 'npm' @('run', 'format:check') -QuietOnSuccess:$Quiet;
             RunCommand 'npm' @('run', 'typecheck') -QuietOnSuccess:$Quiet;
+            $psFiles = Get-ChildItem -Path . -Filter '*.ps1' -Recurse |
+                Where-Object FullName -notlike '*/node_modules/*';
+            $psaResults = if ($psFiles)
+            {
+                Invoke-ScriptAnalyzer -Path $psFiles.FullName -Settings ./PSScriptAnalyzerSettings.psd1 -Severity Error, Warning
+            }
+            else { @() };
+            if ($psaResults)
+            {
+                $psaResults | Format-List;
+                throw 'PSScriptAnalyzer found issues.';
+            }
         }
     }
 

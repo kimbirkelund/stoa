@@ -3,8 +3,14 @@ name: Storybook
 # Build the Storybook component showcase and publish it to GitHub Pages.
 # Requires Pages to be enabled for the repo with the source set to
 # "GitHub Actions" (Settings → Pages → Build and deployment → Source).
+#
+# Triggered when the CI workflow finishes on main: only publish a showcase
+# from a commit whose cross-platform tests passed. The success gate lives on
+# the jobs (workflow_run can't filter on conclusion).
 on:
-  push:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
     branches: [main]
 
 permissions:
@@ -21,8 +27,13 @@ jobs:
   build:
     name: build
     runs-on: ubuntu-latest
+    # Only publish when the triggering CI run succeeded.
+    if: github.event.workflow_run.conclusion == 'success'
     steps:
       - uses: actions/checkout@v7
+        with:
+          # Build the same commit CI validated, not just main's tip.
+          ref: ${{ github.event.workflow_run.head_sha }}
 
       - uses: actions/setup-node@v6
         with:

@@ -28,6 +28,15 @@ jobs:
         shell: pwsh
         run: ./build.ps1 -DoLint -SkipInstall
 
+      # Exercise the static Storybook build here so a build-only break (bad MDX,
+      # bundler config, broken asset import) fails CI rather than only the
+      # downstream Storybook publish workflow.
+      - name: Build static Storybook
+        shell: pwsh
+        run: ./build.ps1 -DoStorybook -Static -SkipInstall
+        env:
+          STORYBOOK_DISABLE_TELEMETRY: '1'
+
       # Lint the workflow files themselves.
       - name: Lint GitHub workflows (actionlint)
         uses: reviewdog/action-actionlint@v1

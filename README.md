@@ -1,5 +1,8 @@
 # Stoa — Agentic Development Environment
 
+[![CI](https://github.com/kimbirkelund/stoa/actions/workflows/ci.yml/badge.svg)](https://github.com/kimbirkelund/stoa/actions/workflows/ci.yml)
+[![Storybook](https://github.com/kimbirkelund/stoa/actions/workflows/storybook.yml/badge.svg)](https://kimbirkelund.github.io/stoa/)
+
 ## Tech stack
 
 Built on **Electron** (Chromium + Node, TypeScript), chosen for consistent

@@ -1,9 +1,6 @@
 import { useState, type FormEvent, type JSX } from 'react'
 import './WorkspaceLauncher.css'
-
-// Canonical workspace-name rule (see docs/definitions.md): a letter, then
-// letters, digits, hyphens, or underscores.
-const NAME_PATTERN = /^[a-zA-Z][a-zA-Z0-9_-]*$/
+import { validateNewWorkspaceName } from './workspace-name'
 
 export type WorkspaceLauncherProps = {
   /** Existing workspaces the user can open, by name. */
@@ -27,24 +24,20 @@ export function WorkspaceLauncher({
 
   function handleCreate(event: FormEvent): void {
     event.preventDefault()
-    const candidate = name.trim()
+    const result = validateNewWorkspaceName(name, workspaces)
 
-    if (!NAME_PATTERN.test(candidate)) {
-      // RWL-4 — invalid name.
+    if (!result.ok) {
       setError(
-        'Name must start with a letter and use only letters, digits, hyphens, or underscores.'
+        result.reason === 'invalid'
+          ? 'Name must start with a letter and use only letters, digits, hyphens, or underscores.'
+          : `A workspace named "${name.trim()}" already exists.`
       )
-      return
-    }
-    if (workspaces.some((w) => w.toLowerCase() === candidate.toLowerCase())) {
-      // RWL-3 — duplicate name (compared case-insensitively).
-      setError(`A workspace named "${candidate}" already exists.`)
       return
     }
 
     setError(null)
     setName('')
-    onCreate(candidate)
+    onCreate(result.name)
   }
 
   return (

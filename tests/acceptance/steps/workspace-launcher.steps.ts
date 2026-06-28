@@ -6,7 +6,7 @@ import { Given, Then, launchApp } from '../fixtures'
 
 Given('the Stoa application is launched without a workspace', async ({ shell }) => {
   // No workspace argument is passed, so the app must present the launcher (RWS-2).
-  shell.app = await launchApp()
+  shell.app = await launchApp(shell)
 })
 
 Then('the workspace launcher is shown', async ({ shell }) => {

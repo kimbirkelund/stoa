@@ -6,7 +6,7 @@ import { Given, When, Then, launchApp } from '../fixtures'
 // definition here; they are reused across scenarios as more are added.
 
 Given('the Stoa application is launched', async ({ shell }) => {
-  shell.app = await launchApp()
+  shell.app = await launchApp(shell)
 })
 
 When('the main window opens', async ({ shell }) => {

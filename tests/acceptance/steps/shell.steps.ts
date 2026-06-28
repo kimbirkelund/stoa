@@ -1,15 +1,12 @@
-import { expect, _electron as electron } from '@playwright/test'
-import { join } from 'path'
-import { Given, When, Then } from '../fixtures'
+import { expect } from '@playwright/test'
+import { Given, When, Then, launchApp } from '../fixtures'
 
 // Step definitions for the Shell acceptance features
 // (docs/features/shell/acceptance/*.feature). Each Gherkin sentence maps to one
 // definition here; they are reused across scenarios as more are added.
 
 Given('the Stoa application is launched', async ({ shell }) => {
-  shell.app = await electron.launch({
-    args: [join(process.cwd(), 'out/main/index.js')]
-  })
+  shell.app = await launchApp()
 })
 
 When('the main window opens', async ({ shell }) => {

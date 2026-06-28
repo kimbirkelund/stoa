@@ -1,6 +1,4 @@
-import { _electron as electron } from '@playwright/test'
-import { join } from 'path'
-import { Given, Then } from '../fixtures'
+import { Given, Then, launchApp } from '../fixtures'
 
 // Step definitions for the Workspace launcher acceptance features
 // (docs/features/workspace-launcher/acceptance/*.feature). The "main window
@@ -8,9 +6,7 @@ import { Given, Then } from '../fixtures'
 
 Given('the Stoa application is launched without a workspace', async ({ shell }) => {
   // No workspace argument is passed, so the app must present the launcher (RWS-2).
-  shell.app = await electron.launch({
-    args: [join(process.cwd(), 'out/main/index.js')]
-  })
+  shell.app = await launchApp()
 })
 
 Then('the workspace launcher is shown', async ({ shell }) => {

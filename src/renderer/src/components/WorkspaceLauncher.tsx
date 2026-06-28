@@ -1,6 +1,6 @@
 import { useState, type FormEvent, type JSX } from 'react'
 import './WorkspaceLauncher.css'
-import { validateNewWorkspaceName } from './workspace-name'
+import { validateNewWorkspaceName } from '../../../shared/workspace'
 
 export type WorkspaceLauncherProps = {
   /** Existing workspaces the user can open, by name. */

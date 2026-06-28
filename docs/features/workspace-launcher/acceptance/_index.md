@@ -5,25 +5,22 @@ files **are** the executable acceptance tests: [playwright-bdd](https://github.c
 (`bddgen`) generates Playwright specs from them using the step definitions in
 `tests/acceptance/steps/`.
 
-| Scenario                                     | Validates | Status                                               |
-| -------------------------------------------- | --------- | ---------------------------------------------------- |
-| Launcher appears when no workspace specified | RWS-2     | ✅ Executable (walking skeleton: placeholder dialog) |
-| Selecting an existing workspace opens it     | RWL-1     | 🚧 `@wip` — excluded until the launcher UI is built  |
-| Creating a new workspace opens it            | RWL-2     | 🚧 `@wip`                                            |
-| Duplicate name is rejected                   | RWL-3     | 🚧 `@wip`                                            |
-| Invalid name is rejected                     | RWL-4     | 🚧 `@wip`                                            |
+The system tier covers real persist/open effects only. Per
+[docs/testing.md](../../../testing.md), input-rejection cases live one tier down:
+RWL-4 (invalid) and RWL-3 (duplicate) are owned by the **component** tier
+(`WorkspaceLauncher.stories.tsx`) and the rule itself by the **unit** tier
+(`src/shared/workspace.test.ts`).
 
-## Walking skeleton
-
-The first milestone is only that the launcher **surface** appears (a placeholder
-dialog reading "workspace launcher goes here", marked
-`[data-testid="workspace-launcher"]`). This wires up the launcher into Shell
-startup and the test harness. The real select/create UI — and the `@wip`
-scenarios above — follow once Storybook is in place.
+| Scenario                                     | Validates | Status        |
+| -------------------------------------------- | --------- | ------------- |
+| Launcher appears when no workspace specified | RWS-2     | ✅ Executable |
+| Selecting an existing workspace opens it     | RWL-1     | ✅ Executable |
+| Creating a new workspace opens it            | RWL-2     | ✅ Executable |
 
 ## Notes
 
-- `@wip` scenarios are excluded from generation via `tags: 'not @wip'` in
-  `playwright.config.ts`, so their not-yet-defined steps do not fail the suite.
-- The launcher surface is identified by a `data-testid`, not UI copy, to decouple
-  the test from wording.
+- Each scenario runs against a throwaway config dir: the fixture sets
+  `STOA_CONFIG_DIR` to the scenario's `--user-data-dir`, so tests never touch the
+  real `~/.config/stoa`.
+- Surfaces are identified by `data-testid` (`workspace-launcher`,
+  `workspace-view`), not UI copy, to decouple tests from wording.

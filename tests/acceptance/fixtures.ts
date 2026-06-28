@@ -31,7 +31,10 @@ export async function launchApp(
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
       return await electron.launch({
-        args: [entry, `--user-data-dir=${world.userDataDir}`, ...args]
+        args: [entry, `--user-data-dir=${world.userDataDir}`, ...args],
+        // Point workspace storage at the scenario's throwaway dir so tests never
+        // touch the real ~/.config/stoa.
+        env: { ...process.env, STOA_CONFIG_DIR: world.userDataDir }
       })
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error)

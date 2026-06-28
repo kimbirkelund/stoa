@@ -87,3 +87,21 @@ jobs:
         if: runner.os != 'Linux'
         shell: pwsh
         run: ./build.ps1 -DoTest -SkipInstall
+
+  # Single aggregate gate: the only check the branch ruleset requires, so every
+  # job above (and the whole test matrix) is gated, and new jobs added to `needs`
+  # are covered without editing the ruleset. `needs.test.result` aggregates all
+  # matrix legs — success only if every OS passed.
+  ci-success:
+    name: ci-success
+    needs: [lint, test]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify all required jobs succeeded
+        run: |
+          echo "results: lint=${{ needs.lint.result }} test=${{ needs.test.result }}"
+          if ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}; then
+            echo "::error::One or more required jobs did not succeed."
+            exit 1
+          fi

@@ -23,7 +23,9 @@ logic **test-first (TDD)** whenever practical. Run with `./build.ps1 -DoTest`
   that does not build, lint clean, and pass tests.
 - Only commit if explicitly allowed by the human.
 - Only push if explicitly allowed by the human.
-- Use single-line commit messages.
+- Use [Conventional Commits](https://www.conventionalcommits.org) (`type: subject`,
+  e.g. `feat:`, `fix:`, `docs:`, `test:`, `refactor:`, `chore:`, `ci:`, `build:`),
+  single-line.
 - Never include yourself as co-author.
 
 ## Renovate

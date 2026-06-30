@@ -10,7 +10,7 @@ workspace cannot be opened.
 
 - [Description](description.md) — how workspace lifecycle works (prose, mental model).
 - [Requirements](requirements.md) — behavioral requirements (`RWS-*`) and open seeds.
-- Acceptance scenarios — _TBD._
+- [Acceptance scenarios](acceptance/_index.md) — system-tier BDD (RWS-1 executable).
 
 The launcher that RWS-2 presents is elaborated by the
 [Workspace launcher](../workspace-launcher/_index.md) feature. Honors the global

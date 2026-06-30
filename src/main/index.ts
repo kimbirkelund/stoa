@@ -1,10 +1,24 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { WORKSPACE_CHANNELS } from '../shared/api'
+import type { Workspace } from '../shared/workspace'
 import { listWorkspaceNames, createWorkspace, readWorkspace } from './workspaces'
+import { workspaceNameFromArgv } from './cli'
 
 // Workspace IPC (RWS-1/3/4, RWL-1/2). Handlers reject on invalid/duplicate/
 // unopenable so the renderer can degrade gracefully.
+
+// RWS-1: resolve the command-line workspace once. If a name was given but cannot
+// be opened, fall back to null (→ launcher); informing the user is RWS-4.
+ipcMain.handle(WORKSPACE_CHANNELS.initial, async (): Promise<Workspace | null> => {
+  const name = workspaceNameFromArgv(process.argv)
+  if (name === null) return null
+  try {
+    return await readWorkspace(name)
+  } catch {
+    return null
+  }
+})
 ipcMain.handle(WORKSPACE_CHANNELS.list, () => listWorkspaceNames())
 ipcMain.handle(WORKSPACE_CHANNELS.create, (_event, name: string) => createWorkspace(name))
 ipcMain.handle(WORKSPACE_CHANNELS.open, (_event, name: string) => readWorkspace(name))

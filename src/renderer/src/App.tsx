@@ -16,7 +16,16 @@ export default function App(): JSX.Element {
   const [open, setOpen] = useState<Workspace | null>(null)
 
   useEffect(() => {
-    void window.stoa.listWorkspaces().then(setWorkspaces, () => setWorkspaces([]))
+    void (async () => {
+      // RWS-1: a workspace named on the command line opens directly; otherwise
+      // (RWS-2) present the launcher over the persisted workspaces.
+      const initial = await window.stoa.initialWorkspace().catch(() => null)
+      if (initial) {
+        setOpen(initial)
+        return
+      }
+      await window.stoa.listWorkspaces().then(setWorkspaces, () => setWorkspaces([]))
+    })()
   }, [])
 
   async function handleCreate(name: string): Promise<void> {

@@ -11,8 +11,8 @@ feature (`RWL-*`).
 ## Resolving a workspace at startup
 
 - **RWS-1 (event) — Open workspace by name from command line.** When the system is
-  started with a workspace **name** as a command-line argument, the system shall
-  open the workspace stored under that name.
+  started with a workspace **name** as a command-line argument (`--workspace=<name>`),
+  the system shall open the workspace stored under that name.
 - **RWS-2 (event) — Workspace launcher.** When the system is started without a
   workspace specified, the system shall present a workspace launcher offering
   (a) the existing workspaces to select from, and (b) creating a new workspace.

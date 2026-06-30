@@ -61,6 +61,6 @@
   "allowScripts": {
     "esbuild@0.25.12": true,
     "esbuild@0.27.7": true,
-    "electron@42.5.0": true
+    "electron@42.5.1": true
   }
 }

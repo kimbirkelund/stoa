@@ -22,16 +22,16 @@ jobs:
 
     steps:
       # fetch-depth 0 so Nerdbank.GitVersioning can see full history.
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.0
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6.4.0
         with:
-          node-version: 24
+          node-version: 24.18.0
           cache: npm
 
-      - uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v5.4.0
         with:
           dotnet-version: '8.x'
 

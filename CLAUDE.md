@@ -16,6 +16,10 @@ the behavior; a rule lives in one pure module, unit-tested. Develop unit-tier
 logic **test-first (TDD)** whenever practical. Run with `./build.ps1 -DoTest`
 (`-Kinds Unit|Component|System|All`).
 
+`playwright` is a direct devDependency — playwright-bdd resolves it top-level;
+don't drop it even though `@playwright/test` also pulls it transitively (a second
+copy de-hoists it and breaks the system tier).
+
 ## Committing & Pushing
 
 - Before committing, run `./build.ps1 -DoLint` and `./build.ps1 -DoTest`

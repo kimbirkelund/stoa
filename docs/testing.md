@@ -39,6 +39,15 @@ main reason to push logic into pure modules: it makes test-first cheap.
 - **System** (`workspace-launcher/acceptance`): creating a workspace actually
   writes a file in the config dir and opens it.
 
+## Authoring acceptance scenarios (`@wip`)
+
+Write the system-tier scenarios for a feature **up front**, then implement
+outside-in. Tag the not-yet-built ones `@wip`; they are excluded from generation
+by `tags: 'not @wip'` in `playwright.config.ts`, so their undefined steps don't
+fail the suite. Un-`@wip` each scenario as its slice lands. A placeholder
+"walking skeleton" scenario (asserting only that the surface appears) is a good
+first executable scenario while the real behavior is still `@wip`.
+
 ## Running
 
 | Command                                     | Runs                                        |

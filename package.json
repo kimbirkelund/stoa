@@ -28,7 +28,7 @@
     "yaml": "2.9.0"
   },
   "devDependencies": {
-    "@eslint/js": "9.39.4",
+    "@eslint/js": "10.0.1",
     "@playwright/test": "1.61.1",
     "@storybook/addon-a11y": "10.4.6",
     "@storybook/addon-docs": "10.4.6",
@@ -43,7 +43,7 @@
     "electron": "42.5.2",
     "electron-builder": "26.15.3",
     "electron-vite": "5.0.0",
-    "eslint": "9.39.4",
+    "eslint": "10.6.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "7.1.1",

@@ -30,7 +30,7 @@ jobs:
     # Only publish when the triggering CI run succeeded.
     if: github.event.workflow_run.conclusion == 'success'
     steps:
-      - uses: actions/checkout@v7.0.0
+      - uses: actions/checkout@v7.0.1
         with:
           # Build the same commit CI validated, not just main's tip.
           ref: ${{ github.event.workflow_run.head_sha }}

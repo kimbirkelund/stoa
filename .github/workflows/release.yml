@@ -22,7 +22,7 @@ jobs:
 
     steps:
       # fetch-depth 0 so Nerdbank.GitVersioning can see full history.
-      - uses: actions/checkout@v7.0.0
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 

@@ -46,7 +46,7 @@ jobs:
 
       # Lint the workflow files themselves.
       - name: Lint GitHub workflows (actionlint)
-        uses: reviewdog/action-actionlint@v1.73.0
+        uses: reviewdog/action-actionlint@v1.73.1
         with:
           fail_level: error
 

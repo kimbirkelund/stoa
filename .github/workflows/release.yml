@@ -31,7 +31,7 @@ jobs:
           node-version: 24.20.0
           cache: npm
 
-      - uses: actions/setup-dotnet@v5.4.0
+      - uses: actions/setup-dotnet@v6.0.0
         with:
           dotnet-version: '8.x'
 
